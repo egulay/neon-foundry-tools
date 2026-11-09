@@ -12,6 +12,7 @@
 set -euo pipefail
 
 THEME_NAME="neon-foundry"
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 THEMES_DIR="$HOME/.config/omarchy/themes"
 PLUGINS_DIR="$HOME/.config/omarchy/plugins"
 LOCK_ID="${USER:-$(id -un)}.lock"
@@ -41,8 +42,9 @@ target="$THEMES_DIR/$THEME_NAME"
 if ((!keep_theme)); then
   if [[ -L $target ]]; then
     real="$(readlink -f "$target")"
-    # The glow copy install.sh made; the .example it came from stays.
-    if [[ -f $real/hyprland.lua && -f $real/hyprland.lua.example ]]; then
+    # The glow copy install.sh made. Only an unchanged copy is removed; a
+    # hyprland.lua that differs from this repository's is someone's own edit.
+    if [[ -f $real/hyprland.lua ]] && cmp -s "$real/hyprland.lua" "$SOURCE_DIR/hyprland.lua"; then
       rm -f "$real/hyprland.lua"
       say "Removed the generated hyprland.lua"
     fi

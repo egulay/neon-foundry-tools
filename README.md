@@ -27,10 +27,12 @@ In order, it:
    one given with `--theme-dir DIR`, is linked into
    `~/.config/omarchy/themes/neon-foundry`, which Omarchy treats as your own
    theme. Otherwise it runs `omarchy theme install`.
-2. **Enables the focused-window glow** — on a linked theme only. The theme
-   ships it as `hyprland.lua.example` because Omarchy drops every `*.lua`
-   from a theme it cloned from git; a linked theme is yours and does load it.
-   The gradient border itself comes from `colors.toml` and works either way.
+2. **Enables the focused-window glow** — on a linked theme only. It is
+   `hyprland.lua` in this repository, copied into the theme. The theme
+   repository cannot carry it: it is Lua that Hyprland runs at login, and
+   Omarchy drops every `*.lua` from a theme it cloned from git. A linked theme
+   is yours and does load it. The gradient border itself comes from
+   `colors.toml` and works either way.
 3. **Installs the unlock screens** by cloning Omarchy's `omarchy.lock`
    plugin to `<user>.lock` and replacing one file in it, then restarting the
    shell so the new view is picked up.
@@ -191,6 +193,7 @@ workspace.
 ```
 install.sh           theme if missing, glow, unlock screens
 uninstall.sh         reverse it
+hyprland.lua         the focused-window glow, copied into a linked theme
 lock/
   LockView.qml       Omarchy's view + one Neon Foundry block
   FoundryScene.qml   picks a scene at random

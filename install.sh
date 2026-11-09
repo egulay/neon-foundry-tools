@@ -14,11 +14,11 @@
 #   1. The theme. Already installed: left alone. --theme-dir, or a checkout
 #      beside this one: linked into ~/.config/omarchy/themes, which Omarchy
 #      treats as the user's own. Otherwise: `omarchy theme install`.
-#   2. The focused-window glow. The theme ships hyprland.lua.example, because
-#      Omarchy drops every *.lua from a theme it cloned from git. A linked
-#      theme is the user's own and does load it, so the file is put in place
-#      there. A cloned theme cannot have it. The gradient border is unaffected
-#      either way: that comes from colors.toml.
+#   2. The focused-window glow. hyprland.lua here is Lua, so the theme
+#      repository does not carry it, and Omarchy drops every *.lua from a theme
+#      it cloned from git. A linked theme is the user's own and does load it,
+#      so the file is copied in there. A cloned theme cannot have it. The
+#      gradient border is unaffected either way: that comes from colors.toml.
 #   3. The unlock screens. Omarchy's lock screen is the Quickshell plugin
 #      omarchy.lock. It is cloned to <user>.lock and only LockView.qml is
 #      replaced; Service.qml, the PAM flows, stays byte-identical to Omarchy's.
@@ -105,8 +105,8 @@ if [[ -L $target ]]; then
   real="$(readlink -f "$target")"
   if [[ -f $real/hyprland.lua ]]; then
     say "Focused-window glow already in place"
-  elif [[ -f $real/hyprland.lua.example ]]; then
-    cp "$real/hyprland.lua.example" "$real/hyprland.lua"
+  else
+    cp "$SOURCE_DIR/hyprland.lua" "$real/hyprland.lua"
     say "Enabled the focused-window glow (hyprland.lua; the theme's git ignores it)"
   fi
 else
